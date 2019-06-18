@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>vue-test</title>
+  </head>
+  <body>
+    <div id="app">
+      <!--<div>-->
+        <!--<span v-bind:title="message">-->
+          <!--提示信息-->
+        <!--</span>-->
+      <!--</div>-->
+
+      <!--<ol>-->
+        <!--<li v-for="item in todos">-->
+          <!--{{item.text}}-->
+        <!--</li>-->
+      <!--</ol>-->
+
+      <button v-on:click="showAlert">xx</button>
+      <div v-once>{{message}}</div>
+      <span v-html="html"></span>
+      <input v-model="message" v-bind:disabled="edit"/>
+      <ol>
+        <todo-item
+          v-for="item in todos"
+          v-bind:todo="item"
+          v-bind:key1="item.text"
+          v-bind:class="{mm: seen}"
+        />
+      </ol>
+      <template v-if="ok">
+        <h1>Title</h1>
+        <p>Paragraph 1</p>
+        <p>Paragraph 2</p>
+      </template>
+      <template v-else>
+        <h1>Title111</h1>
+        <p>Paragraph 111</p>
+        <p>Paragraph 222</p>
+      </template>
+
+
+      <template v-if="loginType === 'username'">
+        <label>Username</label>
+        <input placeholder="Enter your username">
+      </template>
+      <template v-else>
+        <label>Email</label>
+        <input placeholder="Enter your email address">
+      </template>
+
+      <template v-if="loginType === 'username'">
+        <label>Username</label>
+        <input placeholder="Enter your username">
+      </template>
+      <template v-else>
+        <label>Email</label>
+        <input placeholder="Enter your email address">
+      </template>
+
+      <ul>
+        <li v-for="(item, index) in items">
+          {{index}} - {{item.message}}
+        </li>
+      </ul>
+
+
+      <ul>
+        <todo-item
+          v-for="item in todos"
+          v-bind:todo="item"
+          v-bind:key1="item.key1"
+        />
+      </ul>
+
+      <ul>
+        <li
+          is="todo-item"
+          v-for="item in todos"
+          :todo="item"
+          :key1="item.key1"
+        />
+      </ul>
+
+      <div @click="cout('aaaaaaa')">
+        aaaaa
+        <div v-on:click.prevent.self="cout('bbbbbbbb')">
+          bbbbb
+          <div @click="cout('ccccccc')">
+            ccccc
+          </div>
+        </div>
+      </div>
+
+      <select v-model="selected">
+        <option v-bind:value="{number: 123}">123</option>
+      </select>
+
+      <div :style="{ fontSize: postFontSize + 'px' }">
+        <blog-post
+          v-for="post in posts"
+          v-bind:key="post.id"
+          v-bind:post="post"
+          @enlarge-font="enlargeFont"
+        />
+      </div>
+
+
+    </div>
+    <!-- built files will be auto injected -->
+  </body>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    Vue.component('todo-item', {
+      props: ['todo', 'key1'],
+      template: '<ol>{{todo.text}} . {{key1}}</ol>'
+    });
+
+    Vue.component('blog-post', {
+      props: ['post'],
+      template: '<div><p>{{ post.title }}</p><button @click="$emit(\'enlarge-font\', 1)">Enlarge Fontsize</button></div>'
+    })
+
+    var app = new Vue({
+      el: '#app',
+      data: {
+        postFontSize: 16,
+        loginType: 'username',
+        ok: false,
+        edit:false,
+        seen: true,
+        message: 'abcda',
+        html: "<button>html-button</button>",
+        todos: [
+          { text: '学习 JavaScript', key1: 'key111' },
+          { text: '学习 Vue' , key1: 'key222'},
+          { text: '整个牛项目' , key1: 'key1333'}
+        ],
+        items: [
+          { message: 'Foo' },
+          { message: 'Bar' }
+        ],
+        selected: 'aa',
+        posts: [
+          { id: 1, title: 'My journey with Vue' },
+          { id: 2, title: 'Blogging with Vue' },
+          { id: 3, title: 'Why Vue is so fun' }
+        ]
+      },
+      methods: {
+        showAlert: function () {
+          alert(123)
+        },
+        sayHi: function(text, event1) {
+          var xx = event1;
+          console.log(text || 'xxxx')
+        },
+        cout: function(text) {
+          console.log(text);
+        },
+        enlargeFont:function (xx) {
+          debugger
+          this.postFontSize++;
+        }
+      }
+    })
+  </script>
+</html>

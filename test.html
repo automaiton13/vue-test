@@ -4,6 +4,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>vue-test</title>
+    <style>
+      .fade-enter-active, .fade-leave-active {
+        transition: opacity .5s;
+      }
+      .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+        opacity: 0;
+      }
+    </style>
   </head>
   <body>
     <div id="app">
@@ -19,71 +27,83 @@
         <!--</li>-->
       <!--</ol>-->
 
-      <button v-on:click="showAlert">xx</button>
-      <div v-once>{{message}}</div>
-      <span v-html="html"></span>
-      <input v-model="message" v-bind:disabled="edit"/>
-      <ol>
-        <todo-item
-          v-for="item in todos"
-          v-bind:todo="item"
-          v-bind:key1="item.text"
-          v-bind:class="{mm: seen}"
-        />
-      </ol>
-      <template v-if="ok">
-        <h1>Title</h1>
-        <p>Paragraph 1</p>
-        <p>Paragraph 2</p>
-      </template>
-      <template v-else>
-        <h1>Title111</h1>
-        <p>Paragraph 111</p>
-        <p>Paragraph 222</p>
-      </template>
+      <!--<button v-on:click="showAlert">xx</button>-->
+      <!--<div v-once>{{message}}</div>-->
+      <!--<span v-html="html"></span>-->
+      <!--<input v-model="message" v-bind:disabled="edit"/>-->
+      <!--<ol>-->
+        <!--<todo-item-->
+          <!--v-for="item in todos"-->
+          <!--v-bind:todo="item"-->
+          <!--v-bind:key1="item.text"-->
+          <!--v-bind:class="{mm: seen}"-->
+        <!--/>-->
+      <!--</ol>-->
+
+      <!--<template v-if="ok">-->
+        <!--<h1>Title</h1>-->
+        <!--<p>Paragraph 1</p>-->
+        <!--<p>Paragraph 2</p>-->
+      <!--</template>-->
+      <!--<template v-else>-->
+        <!--<h1>Title111</h1>-->
+        <!--<p>Paragraph 111</p>-->
+        <!--<p>Paragraph 222</p>-->
+      <!--</template>-->
+
+      <!--<template v-if="loginType === 'username'">-->
+        <!--<label>Username</label>-->
+        <!--<input placeholder="Enter your username">-->
+      <!--</template>-->
+      <!--<template v-else>-->
+        <!--<label>Email</label>-->
+        <!--<input placeholder="Enter your email address">-->
+      <!--</template>-->
+
+      <!--<template v-if="loginType === 'username'">-->
+        <!--<label>Username</label>-->
+        <!--<input placeholder="Enter your username">-->
+      <!--</template>-->
+      <!--<template v-else>-->
+        <!--<label>Email</label>-->
+        <!--<input placeholder="Enter your email address">-->
+      <!--</template>-->
+
+      <!--<ul>-->
+        <!--<li v-for="(item, index) in items">-->
+          <!--{{index}} - {{item.message}}-->
+        <!--</li>-->
+      <!--</ul>-->
 
 
-      <template v-if="loginType === 'username'">
-        <label>Username</label>
-        <input placeholder="Enter your username">
-      </template>
-      <template v-else>
-        <label>Email</label>
-        <input placeholder="Enter your email address">
-      </template>
+      <!--<ul>-->
+        <!--<todo-item-->
+          <!--v-for="item in todos"-->
+          <!--v-bind:todo="item"-->
+          <!--v-bind:key1="item.key1"-->
+        <!--/>-->
+      <!--</ul>-->
 
-      <template v-if="loginType === 'username'">
-        <label>Username</label>
-        <input placeholder="Enter your username">
-      </template>
-      <template v-else>
-        <label>Email</label>
-        <input placeholder="Enter your email address">
-      </template>
+      <!--<ul>-->
+        <!--<li-->
+          <!--is="todo-item"-->
+          <!--v-for="item in todos"-->
+          <!--:todo="item"-->
+          <!--:key1="item.key1"-->
+        <!--/>-->
+      <!--</ul>-->
 
-      <ul>
-        <li v-for="(item, index) in items">
-          {{index}} - {{item.message}}
-        </li>
-      </ul>
-
-
-      <ul>
-        <todo-item
-          v-for="item in todos"
-          v-bind:todo="item"
-          v-bind:key1="item.key1"
-        />
-      </ul>
-
-      <ul>
-        <li
-          is="todo-item"
-          v-for="item in todos"
-          :todo="item"
-          :key1="item.key1"
-        />
-      </ul>
+      <div id="demo">
+        <button v-on:click="show = !show">
+          Toggle
+        </button>
+        <transition name="fade">
+          <p v-if="show">aaa</p>
+        </transition>
+        <transition name="fade">
+          <p v-if="show">hello</p>
+        </transition>
+      </div>
 
       <div @click="cout('aaaaaaa')">
         aaaaa
@@ -108,7 +128,39 @@
         />
       </div>
 
+      <base-input
+        v-model="username"
+        required
+        placeholder="Enter your username"
+      ></base-input>
 
+      <base-checkbox v-model="lovingVue"></base-checkbox>
+
+      <base-input1 v-on:focus.native="onFocus"></base-input1>
+
+      <navigation-link url="/profile">
+        <template v-slot:header>
+          {{ user.firstName }}
+        </template>
+        <template v-slot:footer>
+          <div style="color: red">v-slot:footer</div>
+        </template>
+        Your Profile {{postFontSize}}
+      </navigation-link>
+
+      <current-user>
+        <template v-slot:default="slotProps">
+          {{ slotProps.user.firstName }}
+        </template>
+      </current-user>
+
+      <component v-bind:is="whichcomp"></component>
+      <button v-on:click="choosencomp('a')">a</button>
+      <button v-on:click="choosencomp('b')">b</button>
+      <button v-on:click="choosencomp('c')">c</button>
+
+    </div>
+    <div id="app">
     </div>
     <!-- built files will be auto injected -->
   </body>
@@ -120,14 +172,116 @@
     });
 
     Vue.component('blog-post', {
-      props: ['post'],
+      props: {
+        post: Object
+      },
       template: '<div><p>{{ post.title }}</p><button @click="$emit(\'enlarge-font\', 1)">Enlarge Fontsize</button></div>'
+    })
+
+    Vue.component('base-input', {
+      inheritAttrs: false,
+      props: ['label', 'value'],
+      template: `
+                  <label>
+                    {{ label }}
+                    <input
+                      v-bind="$attrs"
+                      v-bind:value="value"
+                      v-on:input="$emit('input', $event.target.value)"
+                    >
+                  </label>
+                `
+    })
+
+    Vue.component('base-input1', {
+      inheritAttrs: false,
+      props: ['label', 'value'],
+      computed: {
+        inputListeners: function () {
+          var vm = this;
+          var mm = this.$listeners;
+          return Object.assign({}, this.$listeners, {
+            input: function (event) {
+              vm.$emit('input', event.target.value);
+            }
+          });
+        }
+      },
+      template: `
+                  <label>
+                    {{ label }}
+                    <input
+                      v-bind="$attrs"
+                      v-bind:value="value"
+                      v-on:input="$emit('input', $event.target.value)"
+                      v-on="inputListeners"
+                    >
+                  </label>
+                `
+    })
+
+    Vue.component('base-checkbox', {
+      model: {
+        prop: 'checked',
+        event: 'change1'
+      },
+      props: {
+        checked: Boolean
+      },
+      template: `
+    <input
+      type="checkbox"
+      v-bind:checked="checked"
+      v-on:change="$emit('change1', $event.target.checked)"
+    >
+  `
+    })
+
+    Vue.component('navigation-link', {
+      data: function () {
+        return {
+          url:'/aa'
+        }
+      },
+      template: `
+                  <a
+                    v-bind:href="url"
+                    class="nav-link"
+                  >
+                    <slot name="header">header</slot>
+                    <slot name="default">default</slot>
+                    <br/>
+                    <slot name="default1">default1</slot>
+                    <slot name="footer">footer</slot>
+                  </a>
+                 `
+    })
+
+    Vue.component('current-user', {
+      data: function () {
+        return {
+          user: {
+            firstName: 'first-name',
+            lastName: 'last-name'
+          }
+        }
+      },
+      template: `
+                 <span>
+                    <slot v-bind:user="user">
+                      {{ user.lastName }}
+                    </slot>
+                  </span>
+                 `
     })
 
     var app = new Vue({
       el: '#app',
       data: {
+        show: true,
+        lovingVue:true,
         postFontSize: 16,
+        username: '',
         loginType: 'username',
         ok: false,
         edit:false,
@@ -148,8 +302,28 @@
           { id: 1, title: 'My journey with Vue' },
           { id: 2, title: 'Blogging with Vue' },
           { id: 3, title: 'Why Vue is so fun' }
-        ]
+        ],
+        user: {
+          firstName: 'first-name',
+          lastName: 'last-name'
+        },
+        whichcomp:"",
       },
+      components:{
+        acomp:{
+          template:`
+				<p>这里是组件A</p>
+			`
+        },
+        bcomp:{
+          template:`
+				<p>这里是组件B</p>		`
+        },
+        ccomp:{
+          template:`
+				<p>这里是组件C</p>
+		`
+        }},
       methods: {
         showAlert: function () {
           alert(123)
@@ -164,7 +338,12 @@
         enlargeFont:function (xx) {
           debugger
           this.postFontSize++;
-        }
+        },
+        onFocus: function (event) {
+          debugger
+        },
+        choosencomp:function(x){
+          this.whichcomp=x+"comp"}
       }
     })
   </script>

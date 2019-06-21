@@ -15,336 +15,97 @@
   </head>
   <body>
     <div id="app">
-      <!--<div>-->
-        <!--<span v-bind:title="message">-->
-          <!--提示信息-->
-        <!--</span>-->
-      <!--</div>-->
-
-      <!--<ol>-->
-        <!--<li v-for="item in todos">-->
-          <!--{{item.text}}-->
-        <!--</li>-->
-      <!--</ol>-->
-
-      <!--<button v-on:click="showAlert">xx</button>-->
-      <!--<div v-once>{{message}}</div>-->
-      <!--<span v-html="html"></span>-->
-      <!--<input v-model="message" v-bind:disabled="edit"/>-->
-      <!--<ol>-->
-        <!--<todo-item-->
-          <!--v-for="item in todos"-->
-          <!--v-bind:todo="item"-->
-          <!--v-bind:key1="item.text"-->
-          <!--v-bind:class="{mm: seen}"-->
-        <!--/>-->
-      <!--</ol>-->
-
-      <!--<template v-if="ok">-->
-        <!--<h1>Title</h1>-->
-        <!--<p>Paragraph 1</p>-->
-        <!--<p>Paragraph 2</p>-->
-      <!--</template>-->
-      <!--<template v-else>-->
-        <!--<h1>Title111</h1>-->
-        <!--<p>Paragraph 111</p>-->
-        <!--<p>Paragraph 222</p>-->
-      <!--</template>-->
-
-      <!--<template v-if="loginType === 'username'">-->
-        <!--<label>Username</label>-->
-        <!--<input placeholder="Enter your username">-->
-      <!--</template>-->
-      <!--<template v-else>-->
-        <!--<label>Email</label>-->
-        <!--<input placeholder="Enter your email address">-->
-      <!--</template>-->
-
-      <!--<template v-if="loginType === 'username'">-->
-        <!--<label>Username</label>-->
-        <!--<input placeholder="Enter your username">-->
-      <!--</template>-->
-      <!--<template v-else>-->
-        <!--<label>Email</label>-->
-        <!--<input placeholder="Enter your email address">-->
-      <!--</template>-->
-
-      <!--<ul>-->
-        <!--<li v-for="(item, index) in items">-->
-          <!--{{index}} - {{item.message}}-->
-        <!--</li>-->
-      <!--</ul>-->
-
-
-      <!--<ul>-->
-        <!--<todo-item-->
-          <!--v-for="item in todos"-->
-          <!--v-bind:todo="item"-->
-          <!--v-bind:key1="item.key1"-->
-        <!--/>-->
-      <!--</ul>-->
-
-      <!--<ul>-->
-        <!--<li-->
-          <!--is="todo-item"-->
-          <!--v-for="item in todos"-->
-          <!--:todo="item"-->
-          <!--:key1="item.key1"-->
-        <!--/>-->
-      <!--</ul>-->
-
-      <div id="demo">
-        <button v-on:click="show = !show">
-          Toggle
-        </button>
-        <transition name="fade">
-          <p v-if="show">aaa</p>
-        </transition>
-        <transition name="fade">
-          <p v-if="show">hello</p>
-        </transition>
-      </div>
-
-      <div @click="cout('aaaaaaa')">
-        aaaaa
-        <div v-on:click.prevent.self="cout('bbbbbbbb')">
-          bbbbb
-          <div @click="cout('ccccccc')">
-            ccccc
-          </div>
-        </div>
-      </div>
-
-      <select v-model="selected">
-        <option v-bind:value="{number: 123}">123</option>
-      </select>
-
-      <div :style="{ fontSize: postFontSize + 'px' }">
-        <blog-post
-          v-for="post in posts"
-          v-bind:key="post.id"
-          v-bind:post="post"
-          @enlarge-font="enlargeFont"
-        />
-      </div>
-
-      <base-input
-        v-model="username"
-        required
-        placeholder="Enter your username"
-      ></base-input>
-
-      <base-checkbox v-model="lovingVue"></base-checkbox>
-
-      <base-input1 v-on:focus.native="onFocus"></base-input1>
-
-      <navigation-link url="/profile">
-        <template v-slot:header>
-          {{ user.firstName }}
-        </template>
-        <template v-slot:footer>
-          <div style="color: red">v-slot:footer</div>
-        </template>
-        Your Profile {{postFontSize}}
-      </navigation-link>
-
-      <current-user>
-        <template v-slot:default="slotProps">
-          {{ slotProps.user.firstName }}
-        </template>
-      </current-user>
-
-      <component v-bind:is="whichcomp"></component>
-      <button v-on:click="choosencomp('a')">a</button>
-      <button v-on:click="choosencomp('b')">b</button>
-      <button v-on:click="choosencomp('c')">c</button>
-
     </div>
-    <div id="app">
-    </div>
-    <!-- built files will be auto injected -->
   </body>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <script>
-    Vue.component('todo-item', {
-      props: ['todo', 'key1'],
-      template: '<ol>{{todo.text}} . {{key1}}</ol>'
-    });
-
-    Vue.component('blog-post', {
-      props: {
-        post: Object
-      },
-      template: '<div><p>{{ post.title }}</p><button @click="$emit(\'enlarge-font\', 1)">Enlarge Fontsize</button></div>'
-    })
-
-    Vue.component('base-input', {
-      inheritAttrs: false,
-      props: ['label', 'value'],
-      template: `
-                  <label>
-                    {{ label }}
-                    <input
-                      v-bind="$attrs"
-                      v-bind:value="value"
-                      v-on:input="$emit('input', $event.target.value)"
-                    >
-                  </label>
-                `
-    })
-
-    Vue.component('base-input1', {
-      inheritAttrs: false,
-      props: ['label', 'value'],
-      computed: {
-        inputListeners: function () {
-          var vm = this;
-          var mm = this.$listeners;
-          return Object.assign({}, this.$listeners, {
-            input: function (event) {
-              vm.$emit('input', event.target.value);
-            }
-          });
-        }
-      },
-      template: `
-                  <label>
-                    {{ label }}
-                    <input
-                      v-bind="$attrs"
-                      v-bind:value="value"
-                      v-on:input="$emit('input', $event.target.value)"
-                      v-on="inputListeners"
-                    >
-                  </label>
-                `
-    })
-
-    Vue.component('base-checkbox', {
-      model: {
-        prop: 'checked',
-        event: 'change1'
-      },
-      props: {
-        checked: Boolean
-      },
-      template: `
-    <input
-      type="checkbox"
-      v-bind:checked="checked"
-      v-on:change="$emit('change1', $event.target.checked)"
-    >
-  `
-    })
 
     Vue.component('navigation-link', {
-      data: function () {
-        return {
-          url:'/aa'
-        }
-      },
       template: `
-                  <a
-                    v-bind:href="url"
+                  <div
                     class="nav-link"
                   >
-                    <slot name="header">header</slot>
-                    <slot name="default">default</slot>
-                    <br/>
-                    <slot name="default1">default1</slot>
-                    <slot name="footer">footer</slot>
-                  </a>
+                    xxxxxx
+                    <input v-focus />
+                    <blog-post>
+  <template v-slot:header>
+    <h1>About Me</h1>
+  </template>
+
+  <p>Here's some page content, which will be included in vm.$slots.default, because it's not inside a named slot.</p>
+
+  <template v-slot:footer>
+    <p>Copyright 2016 Evan You</p>
+  </template>
+
+  <p>If I have some content down here, it will also be included in vm.$slots.default.</p>.
+</blog-post>
+                  </div>
                  `
     })
 
-    Vue.component('current-user', {
+    Vue.directive('focus', {
+      inserted: function(el){
+        el.focus()
+      }
+    })
+
+    Vue.component('blog-post', {
+      render: function (createElement) {
+        var header = this.$slots.header
+        var body   = this.$slots.default
+        var footer = this.$slots.footer
+        return createElement('div', [
+          header,
+          createElement('header', header),
+          createElement('header', header),
+          createElement('main', body),
+          createElement('footer', footer)
+        ])
+      }
+    })
+
+    var mixin = {
       data: function () {
         return {
-          user: {
-            firstName: 'first-name',
-            lastName: 'last-name'
-          }
+          x: 'xx',
+          y: 'yy'
         }
       },
-      template: `
-                 <span>
-                    <slot v-bind:user="user">
-                      {{ user.lastName }}
-                    </slot>
-                  </span>
-                 `
-    })
+      created: function () {
+        setTimeout(() => {
+          console.log('混入对象的钩子被调用')
+        }, 0)
+      }
+    };
 
     var app = new Vue({
       el: '#app',
+      mixins: [mixin],
       data: {
-        show: true,
-        lovingVue:true,
-        postFontSize: 16,
-        username: '',
-        loginType: 'username',
-        ok: false,
-        edit:false,
-        seen: true,
-        message: 'abcda',
-        html: "<button>html-button</button>",
-        todos: [
-          { text: '学习 JavaScript', key1: 'key111' },
-          { text: '学习 Vue' , key1: 'key222'},
-          { text: '整个牛项目' , key1: 'key1333'}
-        ],
-        items: [
-          { message: 'Foo' },
-          { message: 'Bar' }
-        ],
-        selected: 'aa',
-        posts: [
-          { id: 1, title: 'My journey with Vue' },
-          { id: 2, title: 'Blogging with Vue' },
-          { id: 3, title: 'Why Vue is so fun' }
-        ],
-        user: {
-          firstName: 'first-name',
-          lastName: 'last-name'
-        },
-        whichcomp:"",
+        x: 'xxx',
+        z: 'zzz'
+      },
+      created: function () {
+        console.log('组件钩子被调用')
       },
       components:{
         acomp:{
           template:`
-				<p>这里是组件A</p>
-			`
+                      <p>这里是组件A</p>
+                    `
         },
         bcomp:{
           template:`
-				<p>这里是组件B</p>		`
+                      <p>这里是组件B</p>
+                    `
         },
         ccomp:{
           template:`
-				<p>这里是组件C</p>
-		`
+                      <p>这里是组件C</p>
+                  `
         }},
-      methods: {
-        showAlert: function () {
-          alert(123)
-        },
-        sayHi: function(text, event1) {
-          var xx = event1;
-          console.log(text || 'xxxx')
-        },
-        cout: function(text) {
-          console.log(text);
-        },
-        enlargeFont:function (xx) {
-          debugger
-          this.postFontSize++;
-        },
-        onFocus: function (event) {
-          debugger
-        },
-        choosencomp:function(x){
-          this.whichcomp=x+"comp"}
-      }
+      template: '<navigation-link/>'
     })
   </script>
 </html>

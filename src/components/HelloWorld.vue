@@ -80,15 +80,42 @@
         </a>
       </li>
     </ul>
+    <button style="color: blue" @click="goRouter">router</button>
+    <button style="color: blue" @click="testStore">test store</button>
+    <div>{{doubleCount}}</div>
   </div>
 </template>
 
 <script>
+  import router from '../router';
+  import store from '../vuex/store';
+  import {mapGetters} from 'vuex';
 export default {
   name: 'HelloWorld',
   data () {
     return {
       msg: 'Welcome to Your Vue.js App'
+    }
+  },
+  computed: {
+    counted: function () {
+      return this.$store.state.count
+    },
+    ...mapGetters({
+      getCount: 'getCount',
+      doubleCount: 'moduleA/doubleCount',
+    }),
+//    ...mapGetters(['getCount'])
+  },
+  methods: {
+    goRouter: function () {
+      var xx = this.$router;
+//      this.$router.push('test');
+      router.push('test')
+    },
+    testStore: function () {
+      store.commit('increase');
+      console.log(store.state.count)
     }
   }
 }

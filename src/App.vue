@@ -1,13 +1,22 @@
 <template>
-  <div id="app">
+  <div id="app1">
     <img src="./assets/logo.png">
     <router-view/>
+    123
+
+    <DirectiveDemo />
   </div>
 </template>
 
 <script>
+import Test from './components/Test.vue'
+import DirectiveDemo from './components/directive-demo.vue'
 export default {
-  name: 'App'
+  name: 'App',
+  components: {
+    Test,
+    DirectiveDemo
+  }
 }
 </script>
 
